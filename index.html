@@ -3,52 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Odor Sensitivity Training App</title>
+    <title>Differential Odor Sensitivity Training App</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
-        <h1>Odor Sensitivity Training App</h1>
-        <p>Select a specific smell that triggers your Differential Odor Sensitivity:</p>
-
+        <h1>Select a Smell</h1>
         <form id="smellForm">
-            <label for="smells">Choose a smell:</label>
+            <label for="smells">Choose a smell that triggers your sensitivity:</label>
             <select name="smells" id="smells">
-                <option value="0">Select a smell</option>
+                <option value="">--Please choose an option--</option>
                 <option value="1">Gasoline</option>
                 <option value="2">Cigarette Smoke</option>
                 <option value="3">Perfume</option>
                 <option value="4">Cleaning Products</option>
-                <option value="5">Paint</option>
-                <option value="6">Cooked Meat</option>
-                <option value="7">Body Odor</option>
-                <option value="8">Mold and Mildew</option>
-                <option value="9">Rubber</option>
-                <option value="10">Exhaust Fumes</option>
+                <!-- Add more options here -->
             </select>
-            <button type="submit">Submit</button>
+            <button type="submit">Find Scents</button>
         </form>
-
-        <div id="results" class="results" style="display:none;">
-            <h2>Results:</h2>
-            <p>Here are 3 real-world scents that match your selected smell, along with their similarity percentage and a customized plan for practicing with these scents at home or in controlled environments:</p>
-            <ul id="resultList">
-            </ul>
+        <div id="results" style="display:none;">
+            <h1>Scents Similar to Selected Smell</h1>
+            <ul id="resultList"></ul>
+        </div>
+        <div id="planContainer" style="display:none;"></div>
+        <div id="timerSection" style="display:none;">
+            <h1>Exposure Timer</h1>
+            <p id="timer">05:00</p>
+            <button id="pauseResumeBtn" onclick="pauseResumeTimer()">Pause</button>
+            <button id="resetBtn" onclick="resetTimer()">Reset</button>
+        </div>
+        <div id="feedbackModal" style="display:none;">
+            <h1>How was your experience?</h1>
+            <label for="difficulty">Difficulty:</label>
+            <input type="range" id="difficulty" name="difficulty" min="1" max="5">
+            <label for="progress">Sense of Progress:</label>
+            <input type="range" id="progress" name="progress" min="1" max="5">
+            <button id="submitFeedback" onclick="submitFeedback()">Submit</button>
         </div>
     </div>
-
-    <div class="container" id="planContainer" style="display:none;">
-        <h2>AI Customized Plan</h2>
-        <p><strong>Where to purchase the scent:</strong> [Insert information here]</p>
-        <p><strong>Step-by-step instructions for safe testing:</strong></p>
-        <ol>
-            <li>[Step 1]</li>
-            <li>[Step 2]</li>
-            <li>[Step 3]</li>
-            <!-- Add more steps as needed -->
-        </ol>
-    </div>
-
     <script src="app.js"></script>
 </body>
 </html>
