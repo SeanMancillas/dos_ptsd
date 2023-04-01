@@ -1,85 +1,84 @@
 document.getElementById("smellForm").addEventListener("submit", function (event) {
     event.preventDefault();
+    const smellSelection = document.getElementById("smells").value;
+    const resultsContainer = document.getElementById("results");
+    const resultList = document.getElementById("resultList");
 
-    const selectedSmell = document.getElementById("smells").value;
-
-    if (selectedSmell) {
-        document.getElementById("results").style.display = "block";
-        const resultList = document.getElementById("resultList");
-
-        // Display sample data for demo purposes
+    if (smellSelection === "1") {
         resultList.innerHTML = `
-            <li><span class="ai-customized-plan">AI Customized Plan</span> Diesel <span class="trending">(Trending with community)</span></li>
-            <li><span class="ai-customized-plan">AI Customized Plan</span> Gasoline</li>
-            <li><span class="ai-customized-plan">AI Customized Plan</span> Kerosene</li>
+            <li>
+                Diesel Fuel Scented Candle
+                <span class="badge">AI Customized Plan</span>
+            </li>
+            <!-- Add other results as needed -->
         `;
-
-        // Display Diesel AI Customized Plan if selected smell is "Gasoline"
-        if (selectedSmell === "1") {
-            const planContainer = document.getElementById("planContainer");
-            planContainer.innerHTML = `
-                <h2>AI Customized Plan: Diesel</h2>
-                <h3>Where to purchase the scent:</h3>
-                <p><a href="https://www.amazon.com/Boostnatics-Diesel-Fuel-Scented-Candle/dp/B06XDNBX69">Boostnatics Diesel Fuel Scented Candle [$23.95]</a></p>
-                <h3>How to test in a safe way:</h3>
-                <ol>
-                    <li>Find a quiet, comfortable, and well-ventilated space where you can practice the exposure exercise.</li>
-                    <!-- Add the rest of the steps here -->
-                </ol>
-                <button onclick="startExposure()">Start the exposure</button>
-            `;
-        }
+        resultsContainer.style.display = "block";
+    } else {
+        resultsContainer.style.display = "none";
     }
 });
 
+document.addEventListener("click", function (event) {
+    if (event.target.classList.contains("badge")) {
+        const planContainer = document.getElementById("planContainer");
+        planContainer.innerHTML = `
+            <h2>AI Customized Plan</h2>
+            <p>
+                Where to purchase the scent:
+                <a href="https://www.amazon.com/Boostnatics-Diesel-Fuel-Scented-Candle/dp/B06XDNBX69">Boostnatics Diesel Fuel Scented Candle [$23.95]</a>
+            </p>
+            <p>How to test in a safe way via step-by-step instructions:</p>
+            <ol>
+                <li>...</li>
+                <!-- Add the steps here -->
+            </ol>
+            <button onclick="startExposure()">Start the exposure</button>
+        `;
+        planContainer.style.display = "block";
+    }
+});
+
+let timer;
+let timerRunning = false;
+let timeLeft = 300; // In seconds
+
 function startExposure() {
     document.getElementById("timerSection").style.display = "block";
-    startTimer();
+    timerRunning = true;
+    timer = setInterval(updateTimer, 1000);
 }
 
-let timerInterval;
-let remainingSeconds = 5 * 60;
-
-function startTimer() {
-    timerInterval = setInterval(function () {
-        remainingSeconds--;
-
-        const minutes = Math.floor(remainingSeconds / 60);
-        const seconds = remainingSeconds % 60;
-
-        document.getElementById("timer").textContent = `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
-
-        if (remainingSeconds === 0) {
-            clearInterval(timerInterval);
-            playBeeps();
-            showFeedbackModal();
-        }
-    }, 1000);
+function updateTimer() {
+    if (timeLeft <= 0) {
+        clearInterval(timer);
+        timerRunning = false;
+        showFeedbackModal();
+    } else {
+        timeLeft--;
+        const minutes = Math.floor(timeLeft / 60);
+        const seconds = timeLeft % 60;
+        document.getElementById("timer").innerText = `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+    }
 }
 
 function pauseResumeTimer() {
-    const pauseResumeBtn = document.getElementById("pauseResumeBtn");
-    if (pauseResumeBtn.textContent === "Pause") {
-        clearInterval(timerInterval);
-        pauseResumeBtn.textContent = "Resume";
+    if (timerRunning) {
+        clearInterval(timer);
+        timerRunning = false;
+        document.getElementById("pauseResumeBtn").innerText = "Resume";
     } else {
-        startTimer();
-        pauseResumeBtn.textContent = "Pause";
+        timer = setInterval(updateTimer, 1000);
+        timerRunning = true;
+        document.getElementById("pauseResumeBtn").innerText = "Pause";
     }
 }
 
 function resetTimer() {
-    clearInterval(timerInterval);
-    remainingSeconds = 5 * 60;
-    document.getElementById("timer").textContent = "05:00";
-    document.getElementById("pauseResumeBtn").textContent = "Pause";
-}
-
-function playBeeps() {
-    const beep = new Audio("assets/beep.mp3");
-    beep.play();
-    setTimeout(() => beep.play(), 1000);
-    setTimeout(() => beep.play(), 2000);
+    clearInterval(timer);
+    timerRunning = false;
+    timeLeft = 300;
+    document.getElementById("timer").innerText = "05:00";
+    document.getElementById("pauseResumeBtn").innerText = "Pause";
 }
 
 function showFeedbackModal() {
@@ -88,5 +87,4 @@ function showFeedbackModal() {
 
 function submitFeedback() {
     document.getElementById("feedbackModal").style.display = "none";
-    // Process the feedback data as needed
 }
