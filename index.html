@@ -3,43 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Differential Odor Sensitivity Training App</title>
+    <title>DOS PTSD App</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <audio id="beep" src="assets/beep.mp3" preload="auto"></audio>
     <div class="container">
-        <h1>Select a Smell</h1>
+        <h1>Differential Odor Sensitivity in PTSD</h1>
         <form id="smellForm">
-            <label for="smells">Choose a smell that triggers your sensitivity:</label>
-            <select name="smells" id="smells">
-                <option value="">--Please choose an option--</option>
+            <label for="smells">Select a smell:</label>
+            <select id="smells">
+                <option value="">--Choose a smell--</option>
                 <option value="1">Gasoline</option>
-                <option value="2">Cigarette Smoke</option>
-                <option value="3">Perfume</option>
-                <option value="4">Cleaning Products</option>
-                <!-- Add more options here -->
+                <!-- Add other smells as needed -->
             </select>
-            <button type="submit">Find Scents</button>
+            <button type="submit">Submit</button>
         </form>
-        <div id="results" style="display:none;">
-            <h1>Scents Similar to Selected Smell</h1>
+        <div id="results" style="display: none;">
+            <h2>Results</h2>
             <ul id="resultList"></ul>
         </div>
-        <div id="planContainer" style="display:none;"></div>
-        <div id="timerSection" style="display:none;">
-            <h1>Exposure Timer</h1>
-            <p id="timer">05:00</p>
+        <div id="planContainer" style="display: none;"></div>
+        <div id="timerSection" style="display: none;">
+            <h2>Exposure Timer</h2>
+            <div id="timer">05:00</div>
             <button id="pauseResumeBtn" onclick="pauseResumeTimer()">Pause</button>
-            <button id="resetBtn" onclick="resetTimer()">Reset</button>
+            <button onclick="resetTimer()">Reset</button>
         </div>
-        <div id="feedbackModal" style="display:none;">
-            <h1>How was your experience?</h1>
-            <label for="difficulty">Difficulty:</label>
-            <input type="range" id="difficulty" name="difficulty" min="1" max="5">
-            <label for="progress">Sense of Progress:</label>
-            <input type="range" id="progress" name="progress" min="1" max="5">
-            <button id="submitFeedback" onclick="submitFeedback()">Submit</button>
+        <div id="feedbackModal" style="display: none;">
+            <h2>How was your experience?</h2>
+            <p>
+                Difficulty: <input type="range" min="1" max="5">
+                Sense of Progress: <input type="range" min="1" max="5">
+            </p>
+            <button onclick="submitFeedback()">Submit</button>
         </div>
     </div>
     <script src="app.js"></script>
