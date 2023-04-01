@@ -76,7 +76,7 @@ function resetTimer() {
 }
 
 function playBeeps() {
-    const beep = new Audio("beep.mp3");
+    const beep = new Audio("assets/beep.mp3");
     beep.play();
     setTimeout(() => beep.play(), 1000);
     setTimeout(() => beep.play(), 2000);
